@@ -1,0 +1,52 @@
+Status summary
+```````
+
+ERC-721 Crop NFT (restricted mint): Done
+    CropNFT.sol with owner/minter role, mint() restricted; baseURI supported.
+
+Cloneable TokenBoundAccount (initialize once): Done
+    TokenBoundAccount.sol with initialize(registry,nft,tokenId,oracle,metadataCid) and per-clone storage.
+
+TBA Registry using OZ Clones (deterministic + predict): Done
+    TBARegistry.sol uses Clones: createTBA() + predictTBA().
+
+Oracle pushes two daily readings (moisture, temperature): Done
+    TokenBoundAccount.pushReading(dateKey, tempC, moisture) allows max 2/day; guarded by onlyOracle.
+
+Read and verify records from TBA: Done
+    getAllReadings(dateKey) returns [2] readings + count; read-verify.js prints and checks.
+
+Node.js code to map NFT → TBA and fetch: Done
+    Deterministic address via predictTBA(), and state.js persists deployments to deployed.json.
+
+IPFS data model stored in contract on init: Done (CID field)
+    metadataCid stored in TBA; sample-metadata.json provided for what to pin; scripts pass placeholder CIDs.
+
+``````````
+accounts flow
+``````````
+
+-Admin/deployer exists (from .env or first Hardhat signer).
+-User account1, account2 assigned from signers or env.
+-Admin mints NFTs to user accounts: mint-and-create-tba.js.
+-Oracle writes readings to TBA: push-readings.js (can use ORACLE_PRIVATE_KEY on live networks).
+-NFT owner can update oracle via setOracle() (owner or registry). If you want owners to also push readings directly, I can loosen onlyOracle to allow owner OR oracle.
+
+``````
+how to run (local)
+
+Build and test:
+    npm run build
+    npm run test
+End-to-end demo:
+    npm run deploy
+    npm run mint-and-create-tba
+    npm run push-readings
+    npm run read-verify
+
+deploy to IoTeX testnet
+    Set .env: IOTEX_PRIVATE_KEY, optional ADMIN/USER1/USER2/ORACLE, ORACLE_PRIVATE_KEY.
+Deploy:
+    npx hardhat run deploy.js --network iotex_testnet
+
+Then run the other scripts with the same network flag or adapt them to use deployed.json.

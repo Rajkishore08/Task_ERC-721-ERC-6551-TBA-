@@ -1,0 +1,8 @@
+{
+  "farmer": {"name": "Alice Grower", "id": "FARM-001", "contact": "alice@example.com"},
+  "warehouse": {"name": "GreenStore", "license": "WH-12345", "location": "123 Farm Rd, Town", "receipt": "RCP-2025-0001"},
+  "commodity": {"type": "Wheat", "grade": "A", "quantityTons": 10.5, "moistureAtIntake": 12.3, "temperatureAtIntakeC": 24.7, "packaging": "bags", "batchId": "BATCH-0001"},
+  "quality": {"inspection": "clean", "lab": {"proteinPct": 12.5, "pesticideResidue": "N/A"}, "certificate": "CERT-001"},
+  "financial": {"depositDate": "2025-09-08", "storageFees": 25.5, "insurance": "INS-333", "terms": "90 days"},
+  "signatures": {"warehouseManager": "0xManagerSig", "farmerAck": "0xFarmerSig"}
+}

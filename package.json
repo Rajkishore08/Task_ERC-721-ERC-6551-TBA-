@@ -1,0 +1,28 @@
+{
+  "name": "iotex-erc721-tba-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "End-to-end demo: ERC-721 with Token-Bound Account (cloneable) + registry on IoTeX",
+  "scripts": {
+    "build": "hardhat compile",
+    "clean": "hardhat clean",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.js",
+    "mint-and-create-tba": "hardhat run scripts/mint-and-create-tba.js",
+    "push-readings": "hardhat run scripts/push-readings.js",
+    "read-verify": "hardhat run scripts/read-verify.js"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "chai": "^4.3.10",
+    "ethers": "^6.12.1",
+    "hardhat": "^2.22.10"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "dotenv": "^16.4.5"
+  }
+}

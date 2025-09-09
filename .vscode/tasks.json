@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "npm run build",
+      "problemMatcher": ["$tsc"],
+      "options": { "shell": { "executable": "powershell.exe" } }
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "npm run test",
+      "options": { "shell": { "executable": "powershell.exe" } }
+    },
+    {
+      "label": "Deploy",
+      "type": "shell",
+      "command": "npm run deploy",
+      "options": { "shell": { "executable": "powershell.exe" } }
+    },
+    {
+      "label": "Mint + Create TBA",
+      "type": "shell",
+      "command": "npm run mint-and-create-tba",
+      "options": { "shell": { "executable": "powershell.exe" } }
+    },
+    {
+      "label": "Push Readings",
+      "type": "shell",
+      "command": "npm run push-readings",
+      "options": { "shell": { "executable": "powershell.exe" } }
+    },
+    {
+      "label": "Read + Verify",
+      "type": "shell",
+      "command": "npm run read-verify",
+      "options": { "shell": { "executable": "powershell.exe" } }
+    }
+  ]
+}

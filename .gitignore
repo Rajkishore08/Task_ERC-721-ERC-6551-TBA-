@@ -1,0 +1,22 @@
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Hardhat
+artifacts/
+cache/
+coverage/
+typechain/
+typechain-types/
+
+# Env & local state
+.env
+.env.*
+deployed.json
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/*.log
+.vscode/*.tmp
