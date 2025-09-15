@@ -1,14 +1,16 @@
 const { ethers } = require("hardhat");
 
 const { ensureDeployed } = require('./utils/ensure');
+const { getDeployerSigner } = require('./utils/signer');
 
 async function main() {
   const deployed = await ensureDeployed();
   const { crop: cropAddr, registry: registryAddr, accounts } = deployed;
   const { user1, user2, oracle } = accounts;
+  const deployer = await getDeployerSigner();
 
-  const cropC = await ethers.getContractAt("CropNFT", cropAddr);
-  const regC = await ethers.getContractAt("TBARegistry", registryAddr);
+  const cropC = await ethers.getContractAt("CropNFT", cropAddr, deployer);
+  const regC = await ethers.getContractAt("TBARegistry", registryAddr, deployer);
 
   // Mint two NFTs: batch for user1 and user2
   let tx = await cropC.mint(user1); await tx.wait();

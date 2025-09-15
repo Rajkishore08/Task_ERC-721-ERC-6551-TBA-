@@ -9,13 +9,15 @@ function yyyymmdd(tsMs) {
 }
 
 const { ensureDeployed } = require('./utils/ensure');
+const { getDeployerSigner, getSignerFromPrivateKeyEnv } = require('./utils/signer');
 
 async function main() {
   const deployed = await ensureDeployed();
   const { crop: cropAddr, registry: registryAddr, accounts } = deployed;
+  const deployer = await getDeployerSigner();
   const { oracle } = accounts;
 
-  const regC = await ethers.getContractAt("TBARegistry", registryAddr);
+  const regC = await ethers.getContractAt("TBARegistry", registryAddr, deployer);
   const token1 = 1, token2 = 2;
   const tba1 = await regC.predictTBA(cropAddr, token1);
   const tba2 = await regC.predictTBA(cropAddr, token2);
@@ -23,12 +25,7 @@ async function main() {
   const tba1C = await ethers.getContractAt("TokenBoundAccount", tba1);
   const tba2C = await ethers.getContractAt("TokenBoundAccount", tba2);
 
-  let oracleSigner;
-  if (process.env.ORACLE_PRIVATE_KEY) {
-    oracleSigner = new ethers.Wallet(process.env.ORACLE_PRIVATE_KEY, ethers.provider);
-  } else {
-    oracleSigner = (await ethers.getSigners())[4];
-  }
+  const oracleSigner = await getSignerFromPrivateKeyEnv('ORACLE_PRIVATE_KEY', true);
 
   const now = Date.now();
   const todayKey = yyyymmdd(now);

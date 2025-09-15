@@ -9,12 +9,14 @@ function yyyymmdd(tsMs) {
 }
 
 const { ensureDeployed } = require('./utils/ensure');
+const { getDeployerSigner } = require('./utils/signer');
 
 async function main() {
   const deployed = await ensureDeployed();
   const { crop: cropAddr, registry: registryAddr } = deployed;
+  const deployer = await getDeployerSigner();
 
-  const regC = await ethers.getContractAt("TBARegistry", registryAddr);
+  const regC = await ethers.getContractAt("TBARegistry", registryAddr, deployer);
   const token1 = 1, token2 = 2;
   const tba1 = await regC.predictTBA(cropAddr, token1);
   const tba2 = await regC.predictTBA(cropAddr, token2);
