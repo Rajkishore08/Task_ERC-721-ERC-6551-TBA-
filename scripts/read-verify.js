@@ -19,6 +19,12 @@ async function main() {
   const tba1 = await regC.predictTBA(cropAddr, token1);
   const tba2 = await regC.predictTBA(cropAddr, token2);
 
+  const code1 = await ethers.provider.getCode(tba1);
+  const code2 = await ethers.provider.getCode(tba2);
+  if (code1 === '0x' || code2 === '0x') {
+    console.log('TBAs not found on-chain yet. Please run mint-and-create-tba first.');
+    return;
+  }
   const tba1C = await ethers.getContractAt("TokenBoundAccount", tba1);
   const tba2C = await ethers.getContractAt("TokenBoundAccount", tba2);
 

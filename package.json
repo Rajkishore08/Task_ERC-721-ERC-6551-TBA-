@@ -10,7 +10,8 @@
     "deploy": "hardhat run scripts/deploy.js",
     "mint-and-create-tba": "hardhat run scripts/mint-and-create-tba.js",
     "push-readings": "hardhat run scripts/push-readings.js",
-    "read-verify": "hardhat run scripts/read-verify.js"
+    "read-verify": "hardhat run scripts/read-verify.js",
+    "demo": "hardhat run scripts/demo-all.js"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",

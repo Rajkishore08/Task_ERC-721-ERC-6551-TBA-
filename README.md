@@ -29,16 +29,17 @@ npm run test
 ## Local Demo (Hardhat Network)
 
 ```powershell
+# One-shot full flow (recommended for first run)
+npm run demo
+
+# Or run step-by-step:
 # 1) Deploy contracts (CropNFT, TBA implementation, Registry)
 npm run deploy
-
-# 2) Mint NFTs to two users and create TBAs
+# 2) Mint NFTs to two users and create TBAs (must run before read-verify)
 npm run mint-and-create-tba
-
-# 3) Push daily readings via oracle
+# 3) Push daily readings via oracle (must run before read-verify)
 npm run push-readings
-
-# 4) Read and verify
+# 4) Read and verify (requires TBAs exist and readings pushed)
 npm run read-verify
 ```
 
