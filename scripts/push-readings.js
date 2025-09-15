@@ -9,7 +9,7 @@ function yyyymmdd(tsMs) {
 }
 
 const { ensureDeployed } = require('./utils/ensure');
-const { getDeployerSigner, getSignerFromPrivateKeyEnv } = require('./utils/signer');
+const { getDeployerSigner, getSignerFromPrivateKeyEnv, getSignerByAddress } = require('./utils/signer');
 
 async function main() {
   const deployed = await ensureDeployed();
@@ -25,7 +25,16 @@ async function main() {
   const tba1C = await ethers.getContractAt("TokenBoundAccount", tba1);
   const tba2C = await ethers.getContractAt("TokenBoundAccount", tba2);
 
-  const oracleSigner = await getSignerFromPrivateKeyEnv('ORACLE_PRIVATE_KEY', true);
+  let oracleSigner = await getSignerByAddress(accounts.oracle);
+  if (!oracleSigner) {
+    // If local accounts don't include the oracle address, try ORACLE_PRIVATE_KEY
+    if (process.env.ORACLE_PRIVATE_KEY) {
+      oracleSigner = await getSignerFromPrivateKeyEnv('ORACLE_PRIVATE_KEY', false);
+    } else {
+      // Fallback to deployer, but ensure the oracle set in TBA matches this signer when creating TBAs
+      oracleSigner = deployer;
+    }
+  }
 
   const now = Date.now();
   const todayKey = yyyymmdd(now);

@@ -24,4 +24,14 @@ async function getSignerFromPrivateKeyEnv(envVar, fallbackToDeployer = true) {
   throw new Error(`Missing ${envVar}.`);
 }
 
-module.exports = { getDeployerSigner, getSignerFromPrivateKeyEnv, requireEnv };
+async function getSignerByAddress(address) {
+  if (!address) return null;
+  const signers = await ethers.getSigners().catch(() => []);
+  const lower = address.toLowerCase();
+  for (const s of signers) {
+    if (s.address.toLowerCase() === lower) return s;
+  }
+  return null;
+}
+
+module.exports = { getDeployerSigner, getSignerFromPrivateKeyEnv, getSignerByAddress, requireEnv };
