@@ -1,10 +1,9 @@
 const { ethers } = require("hardhat");
 
-const state = require('./utils/state');
+const { ensureDeployed } = require('./utils/ensure');
 
 async function main() {
-  let deployed = state.load();
-  if (!deployed) deployed = await require("./deploy")();
+  const deployed = await ensureDeployed();
   const { crop: cropAddr, registry: registryAddr, accounts } = deployed;
   const { user1, user2, oracle } = accounts;
 

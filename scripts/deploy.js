@@ -3,6 +3,7 @@ const { ethers } = require("hardhat");
 const state = require('./utils/state');
 
 async function main() {
+  const network = await ethers.provider.getNetwork();
   const signers = await ethers.getSigners();
   const deployer = signers[0];
   const adminAddr = process.env.ADMIN || (signers[1] ? signers[1].address : deployer.address);
@@ -37,7 +38,7 @@ async function main() {
   // Grant deployer as minter by default is on; also allow admin as minter if needed
   await (await crop.setMinter(adminAddr, true)).wait();
 
-  const deployed = { crop: cropAddr, tbaImpl: tbaImplAddr, registry: registryAddr, accounts: { deployer: deployer.address, admin: adminAddr, user1: user1Addr, user2: user2Addr, oracle: oracleAddr } };
+  const deployed = { chainId: Number(network.chainId), crop: cropAddr, tbaImpl: tbaImplAddr, registry: registryAddr, accounts: { deployer: deployer.address, admin: adminAddr, user1: user1Addr, user2: user2Addr, oracle: oracleAddr } };
   state.save(deployed);
   return deployed;
 }

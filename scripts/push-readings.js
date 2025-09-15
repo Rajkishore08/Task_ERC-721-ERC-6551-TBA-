@@ -8,11 +8,10 @@ function yyyymmdd(tsMs) {
   return Number(`${y}${m}${day}`);
 }
 
-const state = require('./utils/state');
+const { ensureDeployed } = require('./utils/ensure');
 
 async function main() {
-  let deployed = state.load();
-  if (!deployed) deployed = await require("./deploy")();
+  const deployed = await ensureDeployed();
   const { crop: cropAddr, registry: registryAddr, accounts } = deployed;
   const { oracle } = accounts;
 
